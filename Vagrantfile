@@ -42,7 +42,7 @@ SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision 'shell', inline: @script
-  config.vm.synced_folder '.', '/opt/gopath/src/github.com/CiscoCloud/mesos-consul'
+  config.vm.synced_folder '.', '/opt/gopath/src/github.com/mesos-utility/mesos-consul'
 
   %w[vmware_fusion vmware_workstation].each do |_|
     config.vm.provider 'p' do |v|

@@ -4,8 +4,9 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/http"
+	"strings"
 
-	"github.com/CiscoCloud/mesos-consul/registry"
+	"github.com/mesos-utility/mesos-consul/registry"
 
 	consulapi "github.com/hashicorp/consul/api"
 	log "github.com/sirupsen/logrus"
@@ -125,8 +126,46 @@ func (c *Consul) Register(service *registry.Service) {
 		return
 	}
 
+	if err, ret := c.registerUpstream(service); !ret {
+		log.Warnf(err.Error())
+		return
+	}
+
 	serviceCache[s.ID] = newCacheEntry(s, service.Agent)
 	c.CacheMark(s.ID)
+}
+
+func (c *Consul) registerUpstream(service *registry.Service) (error, bool) {
+	// XXX: register nginx upstream in k/v value.
+	var hkey = fmt.Sprintf("upstreams/%s/%s:%d", service.Name, service.Agent, service.Port)
+	value := []byte("{\"weight\":1, \"max_fails\":2, \"fail_timeout\":10}")
+	p := &consulapi.KVPair{Key: hkey, Value: value}
+
+	if work, _, e := c.agents[service.Agent].KV().CAS(p, nil); e != nil {
+		err := fmt.Errorf("Unable to CAS key %s: %s", hkey, e.Error())
+		return err, false
+	} else if !work {
+		log.Debugf("%s is already CAS", hkey)
+	}
+
+	return nil, true
+}
+
+func (c *Consul) deRegisterUpstream(service *consulapi.AgentServiceRegistration) (error, bool) {
+	// XXX: deregister nginx upstream in k/v value.
+	var agents = strings.Split(service.ID, ":")
+	var agent = agents[1]
+	if strings.Contains(agent, "-") {
+		agent = strings.Split(agent, "-")[0]
+	}
+	var hkey = fmt.Sprintf("upstreams/%s/%s:%d", service.Name, agent, service.Port)
+
+	if _, e := c.agents[agent].KV().Delete(hkey, nil); e != nil {
+		err := fmt.Errorf("Unable to Delete key %s: %s", hkey, e.Error())
+		return err, false
+	}
+
+	return nil, true
 }
 
 // Deregister()
@@ -142,6 +181,11 @@ func (c *Consul) Deregister() error {
 			if err != nil {
 				return err
 			}
+
+			if err, _ := c.deRegisterUpstream(b.service); err != nil {
+				log.Warnf(err.Error())
+			}
+
 			delete(serviceCache, s)
 		}
 	}
