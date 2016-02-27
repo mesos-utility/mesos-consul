@@ -1,0 +1,49 @@
+hash: bcd96d2bb82deebcbdacfe2d0a0ad66a37e337d5bd5d08d3d09bd23685c9a93f
+updated: 2016-02-27T16:19:36.77582604+08:00
+imports:
+- name: github.com/gogo/protobuf
+  version: ff05bbbb0ff143cc11fc3f8b700fc3a2864b884d
+  subpackages:
+  - proto
+- name: github.com/golang/glog
+  version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
+- name: github.com/hashicorp/consul
+  version: 2a4436075dbb347f9d78ebfd6645d5c5898ad3aa
+  subpackages:
+  - api
+- name: github.com/hashicorp/go-cleanhttp
+  version: 875fb671b3ddc66f8e2f0acc33829c8cb989a38d
+- name: github.com/hashicorp/serf
+  version: e4ec8cc423bbe20d26584b96efbeb9102e16d05f
+  subpackages:
+  - coordinate
+  - serf
+- name: github.com/mesos-utility/mesos-consul
+  version: 3015c54691f93b328d6b9992b7a350f5e7060707
+  subpackages:
+  - config
+  - consul
+  - mesos
+  - registry
+  - state
+- name: github.com/mesos/mesos-go
+  version: 45c8b08e9af666add36a6f93ff8c1c75812367b0
+  subpackages:
+  - detector
+  - detector/zoo
+  - mesosproto
+  - upid
+  - mesosutil
+- name: github.com/ogier/pflag
+  version: 45c278ab3607870051a2ea9040bb85fcb8557481
+- name: github.com/samuel/go-zookeeper
+  version: 218e9c81c0dd8b3b18172b2bbfad92cc7d6db55f
+  subpackages:
+  - zk
+- name: github.com/sirupsen/logrus
+  version: 219c8cb75c258c552e999735be6df753ffc7afdc
+- name: golang.org/x/net/context
+  version: ""
+- name: golang.org/x/sys/unix
+  version: ""
+devImports: []

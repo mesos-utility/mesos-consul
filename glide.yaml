@@ -1,0 +1,20 @@
+package: github.com/soarpenguin/mesos-consul
+import:
+- package: github.com/hashicorp/consul
+  subpackages:
+  - api
+- package: github.com/mesos-utility/mesos-consul
+  subpackages:
+  - config
+  - consul
+  - mesos
+  - registry
+  - state
+- package: github.com/mesos/mesos-go
+  subpackages:
+  - detector
+  - detector/zoo
+  - mesosproto
+  - upid
+- package: github.com/ogier/pflag
+- package: github.com/sirupsen/logrus
