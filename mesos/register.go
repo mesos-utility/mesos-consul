@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/CiscoCloud/mesos-consul/registry"
-	"github.com/CiscoCloud/mesos-consul/state"
+	"github.com/mesos-utility/mesos-consul/registry"
+	"github.com/mesos-utility/mesos-consul/state"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -29,7 +29,6 @@ func (m *Mesos) RegisterHosts(s state.State) {
 	log.Debug("Running RegisterHosts")
 
 	m.Agents = make(map[string]string)
-
 
 	// Register slaves
 	for _, f := range s.Slaves {
@@ -119,7 +118,7 @@ func (m *Mesos) registerHost(s *registry.Service) {
 func (m *Mesos) registerTask(t *state.Task, agent string) {
 	var tags []string
 
-	tname := cleanName(t.Name)
+	tname := cleanName(t.Name, m.Separator)
 	if m.whitelistRegex != nil {
 		if !m.whitelistRegex.MatchString(tname) {
 			log.WithField("task", tname).Debug("Task not on whitelist")

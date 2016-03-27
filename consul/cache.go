@@ -3,7 +3,7 @@ package consul
 import (
 	"strings"
 
-	"github.com/CiscoCloud/mesos-consul/registry"
+	"github.com/mesos-utility/mesos-consul/registry"
 
 	consulapi "github.com/hashicorp/consul/api"
 	log "github.com/sirupsen/logrus"

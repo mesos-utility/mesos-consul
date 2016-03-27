@@ -89,7 +89,7 @@ You can add options to authenticate via basic http or Consul token.
 |-----------------------|-------------|
 | `version`             | Print mesos-consul version
 | `refresh`             | Time between refreshes of Mesos tasks
-| `mesos-ip-order`             | Comma separated list to control the order in which github.com/CiscoCloud/mesos-consul searches or the task IP address. Valid options are 'netinfo', 'mesos', 'docker' and 'host' (default netinfo,mesos,host)
+| `mesos-ip-order`             | Comma separated list to control the order in which github.com/mesos-utility/mesos-consul searches or the task IP address. Valid options are 'netinfo', 'mesos', 'docker' and 'host' (default netinfo,mesos,host)
 | `healthcheck`             | Enables a http endpoint for health checks. When this flag is enabled, serves health status on 127.0.0.1:24476
 | `healthcheck-ip`             | Health check service interface ip (default 127.0.0.1)
 | `healthcheck-port`             | Health check service port. (default 24476)
@@ -103,7 +103,8 @@ You can add options to authenticate via basic http or Consul token.
 | `whitelist`         | Only register services matching the provided regex. Can be specified multitple time
 | `service-name=<name>`      | Service name of the Mesos hosts
 | `service-tags=<tag>,...` | Comma delimited list of tags to register the Mesos hosts. Mesos hosts will be registered as (leader|master|follower).<tag>.<service>.service.consul
-| `zk`*                 | Location of the Mesos path in Zookeeper. The default value is zk://127.0.0.1:2181/mesos
+| `zk`\*                 | Location of the Mesos path in Zookeeper. The default value is zk://127.0.0.1:2181/mesos
+| `group-separator`      | Choose the group separator. Will replace _ in task names (default is empty)
 
 
 ### Consul Registration

@@ -5,8 +5,8 @@ MAINTAINER Chris Aubuchon <Chris.Aubuchon@gmail.com>
 RUN apt-get update -y \
 	&& apt-get install -y golang git mercurial \
 	&& export GOPATH=/go \
-	&& go get github.com/CiscoCloud/mesos-consul \
-	&& cd /go/src/github.com/CiscoCloud/mesos-consul \
+	&& go get github.com/mesos-utility/mesos-consul \
+	&& cd /go/src/github.com/mesos-utility/mesos-consul \
 	&& go build -o /bin/mesos-consul \
 	&& cd / \
 	&& rm -rf /go \

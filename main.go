@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 	"time"
-	"net/http"
 
-	"github.com/CiscoCloud/mesos-consul/config"
-	"github.com/CiscoCloud/mesos-consul/consul"
-	"github.com/CiscoCloud/mesos-consul/mesos"
+	"github.com/mesos-utility/mesos-consul/config"
+	"github.com/mesos-utility/mesos-consul/consul"
+	"github.com/mesos-utility/mesos-consul/mesos"
 
 	flag "github.com/ogier/pflag"
 	log "github.com/sirupsen/logrus"
@@ -44,7 +44,7 @@ func StartHealthcheckService(c *config.Config) {
 }
 
 func HealthHandler(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintln(w, "OK")
+	fmt.Fprintln(w, "OK")
 }
 
 func parseFlags(args []string) (*config.Config, error) {
@@ -62,6 +62,7 @@ func parseFlags(args []string) (*config.Config, error) {
 	flags.StringVar(&c.LogLevel, "log-level", "WARN", "")
 	flags.DurationVar(&c.Refresh, "refresh", time.Minute, "")
 	flags.StringVar(&c.Zk, "zk", "zk://127.0.0.1:2181/mesos", "")
+	flags.StringVar(&c.Separator, "group-separator", "", "")
 	flags.StringVar(&c.MesosIpOrder, "mesos-ip-order", "netinfo,mesos,host", "")
 	flags.BoolVar(&c.Healthcheck, "healthcheck", false, "")
 	flags.StringVar(&c.HealthcheckIp, "healthcheck-ip", "127.0.0.1", "")
@@ -115,12 +116,13 @@ Options:
 				(default "WARN")
   --refresh=<time>		Set the Mesos refresh rate (default 1m)
   --zk=<address>		Zookeeper path to Mesos (default zk://127.0.0.1:2181/mesos)
+  --group-separator=<separator> Choose the group separator. Will replace _ in task names (default is empty)
   --healthcheck 		Enables a http endpoint for health checks. When this
 				flag is enabled, serves a service health status on 127.0.0.1:24476 (default not enabled)
   --healthcheck-ip=<ip> 	Health check interface ip (default 127.0.0.1)
   --healthcheck-port=<port>	Health check service port (default 24476)
   --mesos-ip-order		Comma separated list to control the order in
-				which github.com/CiscoCloud/mesos-consul searches for the task IP
+				which github.com/mesos-utility/mesos-consul searches for the task IP
 				address. Valid options are 'netinfo', 'mesos', 'docker' and 'host'
 				(default netinfo,mesos,host)
   --heartbeats-before-remove	Number of times that registration needs to fail before removing
@@ -139,5 +141,5 @@ Options:
 type funcVar func(s string) error
 
 func (f funcVar) Set(s string) error { return f(s) }
-func (f funcVar) String() string { return "" }
-func (f funcVar) IsBoolFlag() bool {return false }
+func (f funcVar) String() string     { return "" }
+func (f funcVar) IsBoolFlag() bool   { return false }
