@@ -30,7 +30,6 @@ func (m *Mesos) RegisterHosts(s state.State) {
 
 	m.Agents = make(map[string]string)
 
-
 	// Register slaves
 	for _, f := range s.Slaves {
 		agent := toIP(f.PID.Host)
@@ -119,7 +118,7 @@ func (m *Mesos) registerHost(s *registry.Service) {
 func (m *Mesos) registerTask(t *state.Task, agent string) {
 	var tags []string
 
-	tname := cleanName(t.Name)
+	tname := cleanName(t.Name, m.Separator)
 	if m.whitelistRegex != nil {
 		if !m.whitelistRegex.MatchString(tname) {
 			log.WithField("task", tname).Debug("Task not on whitelist")

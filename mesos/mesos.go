@@ -34,9 +34,11 @@ type Mesos struct {
 	started   sync.Once
 	startChan chan struct{}
 
-	IpOrder []string
-	WhiteList string
+	IpOrder        []string
+	WhiteList      string
 	whitelistRegex *regexp.Regexp
+
+	Separator string
 
 	ServiceName string
 	ServiceTags []string
@@ -48,6 +50,7 @@ func New(c *config.Config) *Mesos {
 	if c.Zk == "" {
 		return nil
 	}
+	m.Separator = c.Separator
 
 	if len(c.WhiteList) > 0 {
 		m.WhiteList = strings.Join(c.WhiteList, "|")
@@ -64,7 +67,7 @@ func New(c *config.Config) *Mesos {
 		m.whitelistRegex = nil
 	}
 
-	m.ServiceName = cleanName(c.ServiceName)
+	m.ServiceName = cleanName(c.ServiceName, c.Separator)
 
 	m.Registry = consul.New()
 
@@ -185,8 +188,8 @@ func (m *Mesos) parseState(sj state.State) {
 	}
 
 	// Remove completed tasks
-    err := m.Registry.Deregister()
-    if err != nil {
-        log.Error(err)
-    }
+	err := m.Registry.Deregister()
+	if err != nil {
+		log.Error(err)
+	}
 }

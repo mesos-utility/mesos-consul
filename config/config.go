@@ -13,10 +13,11 @@ type Config struct {
 	HealthcheckIp   string
 	HealthcheckPort string
 	WhiteList       []string
+	Separator       string
 
 	// Mesos service name and tags
-	ServiceName	string
-	ServiceTags	string
+	ServiceName string
+	ServiceTags string
 }
 
 func DefaultConfig() *Config {
@@ -28,6 +29,7 @@ func DefaultConfig() *Config {
 		HealthcheckIp:   "127.0.0.1",
 		HealthcheckPort: "24476",
 		WhiteList:       []string{},
+		Separator:       "",
 		ServiceName:     "mesos",
 		ServiceTags:     "",
 	}
