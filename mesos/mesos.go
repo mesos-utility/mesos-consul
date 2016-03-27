@@ -188,8 +188,5 @@ func (m *Mesos) parseState(sj state.State) {
 	}
 
 	// Remove completed tasks
-	err := m.Registry.Deregister()
-	if err != nil {
-		log.Error(err)
-	}
+	m.Registry.Deregister()
 }
