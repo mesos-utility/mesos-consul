@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"testing"
 
+	. "github.com/mesos-utility/mesos-consul/state"
 	"github.com/mesos/mesos-go/upid"
-	. "github.com/mesosphere/mesos-dns/records/state"
 )
 
 func TestResources_Ports(t *testing.T) {
