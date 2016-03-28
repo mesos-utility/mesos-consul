@@ -132,9 +132,9 @@ Options:
   --heartbeats-before-remove	Number of times that registration needs to fail before removing
 				task from Consul. (default: 1)
   --whitelist=<regex>		Only register services matching the provided regex. 
-                               Can be specified multiple times
-  --blacklist=<regex>          Only register services matching the provided regex.
-                               Can be specified multiple times
+                                Can be specified multiple times
+  --blacklist=<regex>           Only register services matching the provided regex.
+                                Can be specified multiple times
   --service-name=<name>		Service name of the Mesos hosts. (default: mesos)
   --service-tags=<tag>,...	Comma delimited list of tags to add to the mesos hosts
 				Hosts are registered as
