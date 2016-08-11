@@ -160,11 +160,12 @@ func (c *Consul) deRegisterUpstream(service *consulapi.AgentServiceRegistration)
 	}
 	var hkey = fmt.Sprintf("upstreams/%s/%s:%d", service.Name, agent, service.Port)
 
-	if _, e := c.agents[agent].KV().Delete(hkey, nil); e != nil {
-		err := fmt.Errorf("Unable to Delete key %s: %s", hkey, e.Error())
-		return err, false
+	if _, ok := c.agents[agent]; ok {
+		if _, e := c.agents[agent].KV().Delete(hkey, nil); e != nil {
+			err := fmt.Errorf("Unable to Delete key %s: %s", hkey, e.Error())
+			return err, false
+		}
 	}
-
 	return nil, true
 }
 
